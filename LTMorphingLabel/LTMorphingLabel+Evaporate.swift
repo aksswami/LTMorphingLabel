@@ -60,14 +60,14 @@ extension LTMorphingLabel {
             
             let newProgress = 1.0 - LTEasing.easeOutQuint(progress, 0.0, 1.0)
             let yOffset = CGFloat(self.font.pointSize) * CGFloat(newProgress) * 1.2
-            
-            return LTCharacterLimbo(
+            let char =  LTCharacterLimbo(
                 char: char,
                 rect: self.newRects[index].offsetBy(dx: 0, dy: yOffset),
                 alpha: CGFloat(self.morphingProgress),
                 size: self.font.pointSize,
                 drawingProgress: 0.0
             )
+            return char
         }
     }
     
