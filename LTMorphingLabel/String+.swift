@@ -66,7 +66,6 @@ extension String {
                 break
             }
         }
-        print(sequenceMatrix)
         var max = 0
         for i in sequenceMatrix {
             if i.count > max {

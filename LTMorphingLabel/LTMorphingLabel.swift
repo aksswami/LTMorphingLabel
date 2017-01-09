@@ -480,44 +480,13 @@ extension LTMorphingLabel {
         self.previousOdometerText = self.currentOdometerText
         self.currentOdometerText = newText
         
-        var sequencedNumber = String.sequenceStringForOdometer(self.previousText, endString: self.currentOdometerText)
-        var sequenceCount = sequencedNumber.count
-        print("from:: \(self.previousText) :: to:: \(self.currentOdometerText)")
+        let sequencedNumber = String.sequenceStringForOdometer(self.previousText, endString: self.currentOdometerText)
+        let sequenceCount = sequencedNumber.count
+
         let timer = AKTimer(ticks: UInt(sequenceCount), totalDuration: 0.1 * Double(sequenceCount), controlPoint1: CGPoint(x: 0.5, y: 0), controlPoint2: CGPoint(x: 0.5, y: 1), onEachTickCompletion: { index in
             let numberString = sequencedNumber.reverse()[Int(index)]
             self.text = numberString
-            print(numberString)
         })
         timer.run()
-    }
-    
-    func update(duration: NSTimeInterval) -> NSTimeInterval {
-        if (duration < 0.5) {
-            return 4 * (pow(duration, 3))
-        } else {
-            return (duration - 1) * (pow((2 * duration - 2), 2)) + 1
-        }
-    }
-    
-    func tickTimer(duration: NSTimeInterval, sequencedNumber: [String], sequenceCount: Int) {
-        if #available(iOS 10.0, *) {
-            let timer =  NSTimer.scheduledTimerWithTimeInterval(duration, repeats: false, block: { (timer) in
-                let count = sequenceCount - 1
-                let numberString = sequencedNumber[count]
-                self.text = numberString
-                print(numberString)
-                if count == 0 {
-                    timer.invalidate()
-                    return
-                } else {
-                    let newDuration = self.update(duration)
-                    print(newDuration)
-                    self.tickTimer(newDuration, sequencedNumber: sequencedNumber, sequenceCount: count)
-                }
-            })
-        } else {
-            // Fallback on earlier versions
-        }
-        
     }
 }
