@@ -78,18 +78,18 @@ public extension String {
                     
                     if i <= rhsLength - 1 {
                         // Move to a new index and add a new character to new original place
-                        diffResults[i] = .MoveAndAdd(offset: offset)
+                        diffResults[i] = .Replace//.MoveAndAdd(offset: offset)
                     } else {
-                        diffResults[i] = .Move(offset: offset)
+                        diffResults[i] = .Replace//.Move(offset: offset)
                     }
                     
-                    skipDrawingResults[j] = true
+                    skipDrawingResults[j] = false
                 }
                 break
             }
             
             if !foundCharacterInRhs {
-                if i < rhsLength - 1 {
+                if i <= rhsLength - 1 {
                     diffResults[i] = .Replace
                 } else {
                     diffResults[i] = .Delete

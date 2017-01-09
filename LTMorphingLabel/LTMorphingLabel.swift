@@ -87,6 +87,9 @@ typealias LTMorphingSkipFramesClosure =
     var charHeight: CGFloat = 0.0
     var skipFramesCount: Int = 0
     
+    var previousOdometerText: String = ""
+    var currentOdometerText: String = ""
+    
     #if TARGET_INTERFACE_BUILDER
     let presentingInIB = true
     #else
@@ -470,4 +473,20 @@ extension LTMorphingLabel {
         }
     }
 
+}
+
+extension LTMorphingLabel {
+    func updateLabel(newText: String) {
+        self.previousOdometerText = self.currentOdometerText
+        self.currentOdometerText = newText
+        
+        let sequencedNumber = String.sequenceStringForOdometer(self.previousText, endString: self.currentOdometerText)
+        let sequenceCount = sequencedNumber.count
+
+        let timer = AKTimer(ticks: UInt(sequenceCount), totalDuration: 0.1 * Double(sequenceCount), controlPoint1: CGPoint(x: 0.5, y: 0), controlPoint2: CGPoint(x: 0.5, y: 1), onEachTickCompletion: { index in
+            let numberString = sequencedNumber.reverse()[Int(index)]
+            self.text = numberString
+        })
+        timer.run()
+    }
 }
