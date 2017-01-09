@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09EB47D71E23817C00D07FF3 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47D61E23817C00D07FF3 /* String+.swift */; };
+		09EB47DB1E23A5C400D07FF3 /* AKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47DA1E23A5C400D07FF3 /* AKTimer.swift */; };
+		09EB47DD1E23A64B00D07FF3 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47DC1E23A64B00D07FF3 /* Array+.swift */; };
+		09EB47DE1E23A86E00D07FF3 /* AKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47DA1E23A5C400D07FF3 /* AKTimer.swift */; };
+		09EB47DF1E23A87100D07FF3 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47D61E23817C00D07FF3 /* String+.swift */; };
+		09EB47E01E23A87300D07FF3 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB47DC1E23A64B00D07FF3 /* Array+.swift */; };
 		D720D06B1A5E91CB00747465 /* LTEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AFEC911962511C0006FA88 /* LTEasing.swift */; };
 		D720D06C1A5E91CB00747465 /* LTStringDiffResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7633A2C195965A00009D084 /* LTStringDiffResult.swift */; };
 		D720D06D1A5E91CB00747465 /* LTMorphingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74AD98E19517430009A2ACD /* LTMorphingLabel.swift */; };
@@ -84,6 +90,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09EB47D61E23817C00D07FF3 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		09EB47DA1E23A5C400D07FF3 /* AKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKTimer.swift; sourceTree = "<group>"; };
+		09EB47DC1E23A64B00D07FF3 /* Array+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		D723B2CB196A3FD100B1BBE8 /* Sparkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sparkle.png; sourceTree = "<group>"; };
 		D74AD96E195171E7009A2ACD /* LTMorphingLabelDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LTMorphingLabelDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D74AD972195171E7009A2ACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -212,6 +221,9 @@
 				D757C30C1974243400A34565 /* LTMorphingLabel+Burn.swift */,
 				D7C98F381975265C00902C5C /* LTMorphingLabel+Anvil.swift */,
 				D70FB1FB19685C3300EF9B84 /* Particles */,
+				09EB47D61E23817C00D07FF3 /* String+.swift */,
+				09EB47DA1E23A5C400D07FF3 /* AKTimer.swift */,
+				09EB47DC1E23A64B00D07FF3 /* Array+.swift */,
 			);
 			path = LTMorphingLabel;
 			sourceTree = "<group>";
@@ -428,6 +440,7 @@
 				D720D0751A5E923100747465 /* LTStringDiffResult.swift in Sources */,
 				D7EF4F051AB5610200D46A0E /* LTMorphingEffect.swift in Sources */,
 				D720D0761A5E923100747465 /* LTMorphingLabel.swift in Sources */,
+				09EB47DE1E23A86E00D07FF3 /* AKTimer.swift in Sources */,
 				D720D0771A5E923100747465 /* LTMorphingLabel+Evaporate.swift in Sources */,
 				D720D0781A5E923100747465 /* LTMorphingLabel+Fall.swift in Sources */,
 				D720D0791A5E923100747465 /* LTMorphingLabel+Pixelate.swift in Sources */,
@@ -435,7 +448,9 @@
 				D720D07B1A5E923100747465 /* LTMorphingLabel+Burn.swift in Sources */,
 				D720D07C1A5E923100747465 /* LTMorphingLabel+Anvil.swift in Sources */,
 				D7EF4F0A1AB561A400D46A0E /* LTEmitterView.swift in Sources */,
+				09EB47E01E23A87300D07FF3 /* Array+.swift in Sources */,
 				D74AD974195171E7009A2ACD /* AppDelegate.swift in Sources */,
+				09EB47DF1E23A87100D07FF3 /* String+.swift in Sources */,
 				D797F6FA1D2EA47A00531960 /* LTCharacterDiffResult.swift in Sources */,
 				D7633A2B195812020009D084 /* LTDemoViewController.swift in Sources */,
 			);
@@ -453,6 +468,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EB47DB1E23A5C400D07FF3 /* AKTimer.swift in Sources */,
+				09EB47DD1E23A64B00D07FF3 /* Array+.swift in Sources */,
 				D7EF4F081AB5612C00D46A0E /* LTCharacterLimbo.swift in Sources */,
 				D720D06B1A5E91CB00747465 /* LTEasing.swift in Sources */,
 				D720D06C1A5E91CB00747465 /* LTStringDiffResult.swift in Sources */,
@@ -465,6 +482,7 @@
 				D720D0711A5E91CB00747465 /* LTMorphingLabel+Sparkle.swift in Sources */,
 				D720D0721A5E91CB00747465 /* LTMorphingLabel+Burn.swift in Sources */,
 				D720D0731A5E91CB00747465 /* LTMorphingLabel+Anvil.swift in Sources */,
+				09EB47D71E23817C00D07FF3 /* String+.swift in Sources */,
 				D7EF4F0B1AB561A400D46A0E /* LTEmitterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

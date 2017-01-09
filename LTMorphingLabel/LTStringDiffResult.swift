@@ -72,8 +72,7 @@ public extension String {
                 if i == j {
                     // Character not changed
                     diffResults[i] = .Same
-                }
-                else {
+                } else {
                     // foundCharacterInRhs and move
                     let offset = j - i
                     
