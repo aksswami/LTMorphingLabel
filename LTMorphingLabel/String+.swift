@@ -56,7 +56,18 @@ extension String {
                 sequenceMatrix[i].append("")
                 break
             case .Add:
-                sequenceMatrix[i].append(endString[i])
+                let past: Int = 0
+                var new: Int?
+                new = Int(endString[i])
+                if let new = new {
+                    if past < new {
+                        sequenceMatrix[i].appendContentsOf((past...new).map {"\($0)"})
+                    } else {
+                        sequenceMatrix[i].appendContentsOf((new...past).reverse().map {"\($0)"})
+                    }
+                } else {
+                    sequenceMatrix[i].append(endString[i])
+                }
                 break
             case .Same:
                 sequenceMatrix[i].append(endString[i])
