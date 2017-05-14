@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/github/license/lexrus/LTMorphingLabel.svg?style=flat)
 
 This is a fork from LTMorphingLabel. I have added a wrapper to the current animation to produce odometer style animation. 
-<img src="https://cloud.githubusercontent.com/assets/1496758/26033825/8d7f16d6-38d0-11e7-8d5b-6570f7e2f4a8.gif" width="300" height="70" alt="LTMorphingLabel-Pixelate"/>
+<img src="https://cloud.githubusercontent.com/assets/1496758/26033825/8d7f16d6-38d0-11e7-8d5b-6570f7e2f4a8.gif"/>
 
 A morphing UILabel subclass written in Swift.
 The ```.Scale``` effect mimicked [Apple's QuickType animation of iOS 8](https://youtu.be/w87fOAG8fjk?t=3451) in WWDC 2014. New morphing effects are available as Swift extensions.
