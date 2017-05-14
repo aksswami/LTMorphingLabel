@@ -32,7 +32,8 @@ class LTDemoViewController : UIViewController, LTMorphingLabelDelegate {
         
         label.delegate = self
         
-        label.text = "2929"
+        label.text = "0"
+        label.morphingEffect = .evaporate
     }
     
     var previousText: String = ""
@@ -41,7 +42,8 @@ class LTDemoViewController : UIViewController, LTMorphingLabelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateLabelWithNumber(number: Int(arc4random_uniform(4000000)))
+        updateLabelWithNumber(number: 0)
+
     }
     
     func updateLabelWithNumber(number: Int) {
@@ -53,15 +55,16 @@ class LTDemoViewController : UIViewController, LTMorphingLabelDelegate {
     
     @IBOutlet fileprivate var label: LTMorphingLabel!
     
-    @IBAction func changeText(_ sender: AnyObject) {
-        updateLabelWithNumber(number: Int(arc4random_uniform(4000000)))
+
+    @IBAction func changeText(sender: AnyObject) {
+        updateLabelWithNumber(number: 1072001)
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         let seg = sender
         if let effect = LTMorphingEffect(rawValue: seg.selectedSegmentIndex) {
             label.morphingEffect = effect
-            changeText(sender)
+            changeText(sender: sender)
         }
     }
     
