@@ -10,18 +10,20 @@ import Foundation
 
 extension String {
     
-    subscript (i: Int) -> Character {
-        return self[self.startIndex.advancedBy(i)]
+        subscript (i: Int) -> Character {
+        return self[self.index(startIndex, offsetBy: i)]
     }
     
     subscript (i: Int) -> String {
         return String(self[i] as Character)
     }
     
-    subscript (r: Range<Int>) -> String {
-        let start = startIndex.advancedBy(r.startIndex)
-        let end = start.advancedBy(r.endIndex - r.startIndex)
-        return self[Range(start ..< end)]
+    subscript (r: CountableRange<Int>) -> String? {
+        guard let start = self.index(startIndex, offsetBy: r.startIndex, limitedBy: endIndex),
+            let end = self.index(start, offsetBy: r.endIndex, limitedBy: endIndex) else {
+                return nil
+        }
+        return self[start..<end]
     }
     
     static func sequenceStringForOdometer(startString: String, endString: String) -> [String] {
@@ -35,30 +37,30 @@ extension String {
                 continue
             }
             switch diff.0[i] {
-            case .Replace:
+            case .replace:
                 var past: Int?
                 var new: Int?
                 if i < startString.characters.count {
                     past = Int(startString[i])
                 }
                 new = Int(endString[i])
-                if let new = new, past = past {
+                if let new = new, let past = past {
                     if past < new {
-                        sequenceMatrix[i].appendContentsOf((past...new).map {"\($0)"})
+                        sequenceMatrix[i].append(contentsOf: (past...new).map {"\($0)"})
                     } else {
-                        sequenceMatrix[i].appendContentsOf((new...past).reverse().map {"\($0)"})
+                        sequenceMatrix[i].append(contentsOf: (new...past).reversed().map {"\($0)"})
                     }
                 } else {
                     sequenceMatrix[i].append(endString[i])
                 }
                 break
-            case .Delete:
+            case .delete:
                 sequenceMatrix[i].append("")
                 break
-            case .Add:
+            case .add:
                 sequenceMatrix[i].append(endString[i])
                 break
-            case .Same:
+            case .same:
                 sequenceMatrix[i].append(endString[i])
                 break
             default:
@@ -77,15 +79,15 @@ extension String {
             if rowCount < max {
                 let lastElement = sequenceMatrix[i].last ?? ""
                 let tempSequence = (1...(max-rowCount)).map { _ in return lastElement}
-                sequenceMatrix[i].appendContentsOf(tempSequence)
+                sequenceMatrix[i].append(contentsOf: tempSequence)
             }
         }
-        let transStr = Array<String>.transpose(sequenceMatrix)
+        let transStr = Array<String>.transpose(input: sequenceMatrix)
         var sequencedStrings = [String]()
         for text in transStr {
-            sequencedStrings.append(text.reduce("", combine: +))
+            sequencedStrings.append(text.reduce("", +))
         }
-        sequencedStrings = sequencedStrings.reverse()
+        sequencedStrings = sequencedStrings.reversed()
         
         return sequencedStrings
     }

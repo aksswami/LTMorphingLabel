@@ -38,23 +38,23 @@ class LTDemoViewController : UIViewController, LTMorphingLabelDelegate {
     var previousText: String = ""
     var currentText: String = ""
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateLabelWithNumber(Int(arc4random_uniform(4000000)))
+        updateLabelWithNumber(number: Int(arc4random_uniform(4000000)))
     }
     
     func updateLabelWithNumber(number: Int) {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         
-        self.label.updateLabel(formatter.stringFromNumber(NSNumber(integer: number)) ?? "")
+        self.label.updateLabel(newText: formatter.string(from: NSNumber(value: number)) ?? "")
     }
     
     @IBOutlet fileprivate var label: LTMorphingLabel!
     
     @IBAction func changeText(_ sender: AnyObject) {
-        updateLabelWithNumber(Int(arc4random_uniform(4000000)))
+        updateLabelWithNumber(number: Int(arc4random_uniform(4000000)))
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
@@ -70,7 +70,7 @@ class LTDemoViewController : UIViewController, LTMorphingLabelDelegate {
         view.backgroundColor = isNight ? UIColor.black : UIColor.white
         label.textColor = isNight ? UIColor.white : UIColor.black
 
-        updateLabelWithNumber(Int(arc4random_uniform(4000000)))
+        updateLabelWithNumber(number: Int(arc4random_uniform(4000000)))
     }
     
     @IBAction func changeFontSize(_ sender: UISlider) {

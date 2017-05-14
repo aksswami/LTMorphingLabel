@@ -14,31 +14,31 @@ class AKTimer {
     typealias AKTimerCompletion = () -> ()
     
     var numberOfTicks: UInt = 0
-    var totalDuration: NSTimeInterval = 0
+    var totalDuration: TimeInterval = 0
     var tickBlock: ((UInt) -> ())?
     var completionBlock: (() -> ())?
-    var absoluteTickTimings = [NSTimeInterval]()
+    var absoluteTickTimings = [TimeInterval]()
     
-    init(ticks tickCount: UInt, totalDuration duration: NSTimeInterval, controlPoint1 cp1: CGPoint, controlPoint2 cp2: CGPoint, onEachTickCompletion eachTickBlock: ((UInt) -> ())? = nil, onCompletion completion: ((() -> ()))? = nil) {
+    init(ticks tickCount: UInt, totalDuration duration: TimeInterval, controlPoint1 cp1: CGPoint, controlPoint2 cp2: CGPoint, onEachTickCompletion eachTickBlock: ((UInt) -> ())? = nil, onCompletion completion: ((() -> ()))? = nil) {
         self.numberOfTicks = tickCount
         self.totalDuration = duration
         self.tickBlock = eachTickBlock
         self.completionBlock = completion
-        let timings = AKBezierTimings().timingsForTicks(tickCount, cp1: cp1, cp2: cp2)
+        let timings = AKBezierTimings().timingsForTicks(tickCount: tickCount, cp1: cp1, cp2: cp2)
         self.absoluteTickTimings = Array(timings[0..<Int(self.numberOfTicks)])
         
     }
     
-    class func accelerationTimerWithTicks(tickCount: UInt, totalDuration duration: NSTimeInterval, controlPoint1 cp1: CGPoint, controlPoint2 cp2: CGPoint, onEachTickCompletion eachTickBlock: ((UInt) -> ())? = nil, onCompletion completion: ((() -> ()))? = nil) -> AKTimer {
+    class func accelerationTimerWithTicks(tickCount: UInt, totalDuration duration: TimeInterval, controlPoint1 cp1: CGPoint, controlPoint2 cp2: CGPoint, onEachTickCompletion eachTickBlock: ((UInt) -> ())? = nil, onCompletion completion: ((() -> ()))? = nil) -> AKTimer {
         return AKTimer(ticks: tickCount, totalDuration: duration, controlPoint1: cp1, controlPoint2: cp2, onEachTickCompletion: eachTickBlock, onCompletion: completion)
     }
     
     func run() {
-        runTick(0)
+        runTick(tickIndexNumber: 0)
     }
     
     func runTick(tickIndexNumber: UInt) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self)
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         let tickIndex: UInt = tickIndexNumber
         
         let simulationCompleted = (tickIndex >= self.numberOfTicks)
@@ -53,13 +53,11 @@ class AKTimer {
         let currentTickDuration = nextTickTiming - currentTickTiming
         let nextTickDelay = totalDuration * currentTickDuration
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(nextTickDelay * Double(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue(), {
-                self.runTick(tickIndex + 1)
-            })
+        DispatchQueue.global(qos: .default).async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + nextTickDelay) {
+                self.runTick(tickIndexNumber: tickIndex + 1)
+            }
         }
-        
     }
 }
 
@@ -104,40 +102,40 @@ func cubicBezier(x: CGFloat, a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat) -> 
     var currentt = x
     let nRefinementIterations = 5
     for _ in 0..<nRefinementIterations {
-        let currentx = xFromT (currentt, A: A, B: B, C: C, D: D)
-        let currentslope = slopeFromT (currentt, A: A, B: B, C: C)
+        let currentx = xFromT (t: currentt, A: A, B: B, C: C, D: D)
+        let currentslope = slopeFromT (t: currentt, A: A, B: B, C: C)
         currentt -= (currentx - x)*(currentslope)
         //		currentt = constrain(currentt, 0,1)
     }
     
-    let y = yFromT (currentt, E: E, F: F, G: G, H: H)
+    let y = yFromT (t: currentt, E: E, F: F, G: G, H: H)
     return y
 }
 
 
 
 class AKBezierTimings {
-    var absoluteDelays = [NSTimeInterval]()
+    var absoluteDelays = [TimeInterval]()
     var bezierCubicPathFirst = CGPoint.zero
     var bezierCubicPathSecond = CGPoint.zero
     
-    func timingsForTicks(tickCount: UInt, cp1: CGPoint, cp2: CGPoint) -> [NSTimeInterval] {
+    func timingsForTicks(tickCount: UInt, cp1: CGPoint, cp2: CGPoint) -> [TimeInterval] {
         let calculator = AKBezierTimings()
         calculator.bezierCubicPathFirst = cp1
         calculator.bezierCubicPathSecond = cp2
-        return calculator.timingsForTicks(tickCount)
+        return calculator.timingsForTicks(tickCount: tickCount)
     }
     
-    func timingsForTicks(tickCount: UInt) -> [NSTimeInterval] {
+    func timingsForTicks(tickCount: UInt) -> [TimeInterval] {
         assert(!__CGPointEqualToPoint(self.bezierCubicPathFirst, self.bezierCubicPathSecond), "The control points must be different from one another.")
         var lastMultiples: UInt = 0
-        var lastMilestoneTime: NSTimeInterval = 0.0
-        let thisMilestoneTime: NSTimeInterval = 0.0
-        var thisIntervalFromLast: NSTimeInterval = 0.0
+        var lastMilestoneTime: TimeInterval = 0.0
+        let thisMilestoneTime: TimeInterval = 0.0
+        var thisIntervalFromLast: TimeInterval = 0.0
         var x: Double = 0
         let step: Double = 0.001
         while x < (1.0 - step) {
-            let y: CGFloat = cubicBezier(CGFloat(x), a: bezierCubicPathFirst.x, b: bezierCubicPathFirst.y, c: bezierCubicPathSecond.x, d: bezierCubicPathSecond.y)
+            let y: CGFloat = cubicBezier(x: CGFloat(x), a: bezierCubicPathFirst.x, b: bezierCubicPathFirst.y, c: bezierCubicPathSecond.x, d: bezierCubicPathSecond.y)
             let milestonesPassed: UInt = UInt(y * CGFloat(tickCount))
             let crossedAMilestone = milestonesPassed > lastMultiples
             if crossedAMilestone {
